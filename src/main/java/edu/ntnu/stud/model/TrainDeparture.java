@@ -41,6 +41,23 @@ public class TrainDeparture {
     return departureTime.plus(delay);
   }
 
+  /**
+   * Returns the train number.
+   * 
+   * @return the train number
+   */
+  public int getTrainNumber() {
+    return trainNumber;
+  }
+
+  /**
+   * Returns the destination of the train.
+   * 
+   * @return the destination of the train
+   */
+  public String getDestination() {
+    return destination;
+  }
   @Override
   public String toString() {
     return "TrainDeparture [departureTime=" + departureTime + ", line=" + line + ", trainNumber=" + trainNumber
