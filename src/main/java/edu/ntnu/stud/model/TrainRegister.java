@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 public class TrainRegister {
   private final ArrayList<TrainDeparture> trainDepartures;
+  private final int MAX_TRAIN_NUMBER = 9999;
 
   public TrainRegister() {
     trainDepartures = new ArrayList<>();
@@ -17,9 +18,10 @@ public class TrainRegister {
   }
 
   public void addTrainDeparture(TrainDeparture trainDeparture) {
-    if (trainNumberExists(trainDeparture)) {
+    if (trainNumberExists(trainDeparture))
       throw new IllegalArgumentException("Train number already exists");
-    }
+    if (trainDeparture.getTrainNumber() > MAX_TRAIN_NUMBER)
+      throw new IllegalArgumentException("Train number cannot be greater than " + MAX_TRAIN_NUMBER);
 
     trainDepartures.add(trainDeparture);
   }
