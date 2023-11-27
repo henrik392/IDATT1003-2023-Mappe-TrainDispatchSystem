@@ -10,7 +10,15 @@ public class TrainRegister {
     trainDepartures = new ArrayList<>();
   }
 
+  private boolean trainNumberExists(TrainDeparture trainDeparture) {
+    return trainDepartures.contains(trainDeparture);
+  }
+
   public void addTrainDeparture(TrainDeparture trainDeparture) {
+    if (trainNumberExists(trainDeparture)) {
+      throw new IllegalArgumentException("Train number already exists");
+    }
+
     trainDepartures.add(trainDeparture);
   }
 
