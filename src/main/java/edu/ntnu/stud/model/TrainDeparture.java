@@ -3,6 +3,10 @@ package edu.ntnu.stud.model;
 import java.time.LocalTime;
 import java.time.Duration;
 
+/**
+ * Represents a train departure with departure time, line, train number,
+ * destination, track, and delay.
+ */
 public class TrainDeparture {
   private LocalTime departureTime;
   private String line;
@@ -11,7 +15,17 @@ public class TrainDeparture {
   private int track;
   private Duration delay;
 
-  // Exempted delay
+  /**
+   * Constructs a TrainDeparture object with the specified departure time, line,
+   * train number, destination, track, and delay.
+   * 
+   * @param departureTime the departure time of the train
+   * @param line          the line of the train
+   * @param trainNumber   the train number
+   * @param destination   the destination of the train
+   * @param track         the track number
+   * @param delay         the delay of the train
+   */
   public TrainDeparture(LocalTime departureTime, String line, int trainNumber, String destination, int track,
       Duration delay) {
     this.departureTime = departureTime;
@@ -19,6 +33,10 @@ public class TrainDeparture {
     this.trainNumber = trainNumber;
     this.destination = destination;
     this.track = track;
+
+    if (delay.isNegative())
+      throw new IllegalArgumentException("Delay cannot be negative");
+
     this.delay = delay;
   }
 
@@ -37,6 +55,12 @@ public class TrainDeparture {
   public Duration getDelay() {
     return delay;
   }
+
+  /**
+   * Returns the delayed time of the train.
+   * 
+   * @return the delayed time of the train
+   */
   public LocalTime getDelayedTime() {
     return departureTime.plus(delay);
   }
@@ -58,6 +82,12 @@ public class TrainDeparture {
   public String getDestination() {
     return destination;
   }
+
+  /**
+   * Returns a string representation of the TrainDeparture object.
+   * 
+   * @return a string representation of the TrainDeparture object
+   */
   @Override
   public String toString() {
     return "TrainDeparture [departureTime=" + departureTime + ", line=" + line + ", trainNumber=" + trainNumber
