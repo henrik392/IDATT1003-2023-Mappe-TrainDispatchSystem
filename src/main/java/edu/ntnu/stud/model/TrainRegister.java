@@ -2,6 +2,7 @@ package edu.ntnu.stud.model;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.stream.Collectors;
 
 public class TrainRegister {
@@ -38,11 +39,16 @@ public class TrainRegister {
   }
 
   public ArrayList<TrainDeparture> deleteDeparturesBeforeTime(LocalTime time) {
-    ArrayList<TrainDeparture> deletedDepartures = trainDepartures.stream()
-        .filter(trainDeparture -> trainDeparture.getDelayedTime().isBefore(time))
-        .collect(Collectors.toCollection(ArrayList::new));
+    ArrayList<TrainDeparture> deletedDepartures = new ArrayList<>();
+    Iterator<TrainDeparture> iterator = trainDepartures.iterator();
+    while (iterator.hasNext()) {
+      TrainDeparture trainDeparture = iterator.next();
+      if (trainDeparture.getDelayedTime().isBefore(time)) {
+        deletedDepartures.add(trainDeparture);
+        iterator.remove();
+      }
+    }
 
-    trainDepartures.removeAll(deletedDepartures);
     return deletedDepartures;
   }
 
