@@ -9,6 +9,12 @@ Agregering, komposisjon
 ## Project description
 
 [//]: # (TODO: Write a short description of your project/product here.)
+Prosjektet bruker Semantisk Versjonering (SemVer). Den deler versjonen i tre deler i "MAJOR.MINOR.PATCH":
+1. MAJOR versjon økes når det er gjort inkompatible API-endringer
+2. MINOR versjon økes når du legger til funksjonalitet på en bakoverkompatibel måte
+3. PATCH versjon økes når du gjør bakoverkompatible feilrettinger
+
+Før realease er versjonen i formatet 0.x.y for å symbolisere at den er i en tidlig ustabil fase.
 
 ## Project structure
 
