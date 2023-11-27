@@ -2,7 +2,7 @@
 This file uses Mark Down syntax. For more information see [here](https://www.markdownguide.org/basic-syntax/).
 
 STUDENT NAME = Henrik Halvorsen Kvamme
-STUDENT ID = .....
+STUDENT ID = 111794
 
 Agregering, komposisjon
 
@@ -26,6 +26,16 @@ What is the input and output of the program? What is the expected behaviour of t
 ## How to run the tests
 
 [//]: # (TODO: Describe how to run the tests here.)
+@DisplayName format:
+
+```java
+@DisplayName("[Action or Condition] [in/on/at] [Method/Class/Scenario] [Expected Result/Behavior]")
+
+// For example:
+@DisplayName("Valid input on addItem method adds item successfully")
+@DisplayName("Division by zero in calculate method throws ArithmeticException")
+@DisplayName("Incorrect credentials on login method returns authentication error")
+```
 
 ## References
 
