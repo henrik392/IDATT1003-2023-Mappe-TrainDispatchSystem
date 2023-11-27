@@ -65,12 +65,17 @@ public class TrainDeparture {
         + getDelayedTime();
   }
 
-  public int getTrainNumber() {
-    return trainNumber;
-  }
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
 
-  public String getDestination() {
-    return destination;
+    TrainDeparture other = (TrainDeparture) obj;
+    return trainNumber == other.trainNumber;
   }
 
 }
