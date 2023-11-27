@@ -2,6 +2,8 @@ package edu.ntnu.stud.model;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class TrainRegister {
   private final ArrayList<TrainDeparture> trainDepartures;
@@ -27,38 +29,23 @@ public class TrainRegister {
   }
 
   public TrainDeparture getTrainDepatureFromTrainNumber(int trainNumber) {
-    for (TrainDeparture trainDeparture : trainDepartures) {
-      if (trainDeparture.getTrainNumber() == trainNumber) {
-        return trainDeparture;
-      }
-    }
-
-    throw new IllegalArgumentException("Train number " + trainNumber + " not found");
+    return trainDepartures.stream().filter(trainDeparture -> trainDeparture.getTrainNumber() == trainNumber)
+        .findFirst().orElse(null);
   }
 
-  public ArrayList<TrainDeparture> getTrainDeparturesFromDestination(String destination) {
-    ArrayList<TrainDeparture> trainDeparturesFromDestination = new ArrayList<>();
-    for (TrainDeparture trainDeparture : trainDepartures) {
-      if (trainDeparture.getDestination().equals(destination)) {
-        trainDeparturesFromDestination.add(trainDeparture);
-      }
-    }
-
-    return trainDeparturesFromDestination;
-    // Burde jeg throwe en exception her om det ikke er noen avganger?
+  public ArrayList<TrainDeparture> getTrainDeparturesToDestination(String destination) {
+    return trainDepartures.stream().filter(trainDeparture -> trainDeparture.getDestination().equals(destination))
+        .collect(Collectors.toCollection(ArrayList::new));
   }
 
   public ArrayList<TrainDeparture> deleteDeparturesBeforeTime(LocalTime time) {
-    ArrayList<TrainDeparture> deletedDepartures = new ArrayList<>();
-    for (TrainDeparture trainDeparture : trainDepartures) {
-      if (trainDeparture.getDelayedTime().isBefore(time)) {
-        deletedDepartures.add(trainDeparture);
-      }
-    }
+    List<TrainDeparture> deletedDepartures = trainDepartures.stream()
+        .filter(trainDeparture -> trainDeparture.getDelayedTime().isBefore(time))
+        .collect(Collectors.toList());
 
     trainDepartures.removeAll(deletedDepartures);
-    return deletedDepartures;
-    // Could use streams
+    return (ArrayList<TrainDeparture>) deletedDepartures;
+    // TODO: Bytt til foreach med iterator
   }
 
   public ArrayList<TrainDeparture> sortedByTime() {
