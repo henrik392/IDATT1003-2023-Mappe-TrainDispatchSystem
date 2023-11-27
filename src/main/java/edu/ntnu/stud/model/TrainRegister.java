@@ -38,9 +38,11 @@ public class TrainRegister {
   public ArrayList<TrainDeparture> getTrainDeparturesToDestination(String destination) {
     return trainDepartures.stream().filter(trainDeparture -> trainDeparture.getDestination().equals(destination))
         .collect(Collectors.toCollection(ArrayList::new));
+
+    // Sort by departure time?
   }
 
-  public ArrayList<TrainDeparture> deleteDeparturesBeforeTime(LocalTime time) {
+  private ArrayList<TrainDeparture> deleteDeparturesBeforeTime(LocalTime time) {
     ArrayList<TrainDeparture> deletedDepartures = new ArrayList<>();
     Iterator<TrainDeparture> iterator = trainDepartures.iterator();
     while (iterator.hasNext()) {
