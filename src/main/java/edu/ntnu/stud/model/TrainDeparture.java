@@ -22,6 +22,21 @@ public class TrainDeparture {
     this.delay = delay;
   }
 
+  /**
+   * Adds the specified number of minutes to the delay of the train.
+   * 
+   * @param minutes the number of minutes to add to the delay
+   */
+  public void addDelay(int minutes) {
+    if (minutes < 0)
+      throw new IllegalArgumentException("Delay cannot be negative");
+
+    delay = delay.plusMinutes(minutes);
+  }
+
+  public Duration getDelay() {
+    return delay;
+  }
   public LocalTime getDelayedTime() {
     return departureTime.plus(delay);
   }
