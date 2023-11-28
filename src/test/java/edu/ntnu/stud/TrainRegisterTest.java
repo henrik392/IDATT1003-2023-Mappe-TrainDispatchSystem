@@ -114,7 +114,7 @@ public class TrainRegisterTest {
     @Test
     @DisplayName("sortedByTime() returns an ArrayList og the train departures sorted by getDelayedTime()")
     public void testSortedByTime() {
-      ArrayList<TrainDeparture> sortedTrainDepartures = trainRegister.sortedByTime();
+      ArrayList<TrainDeparture> sortedTrainDepartures = trainRegister.sortByTime();
       assertTrue(trainRegister.getTrainDepartures().containsAll(sortedTrainDepartures));
 
       LocalTime previousTime = null;
