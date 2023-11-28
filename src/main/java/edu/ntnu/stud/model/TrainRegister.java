@@ -7,14 +7,27 @@ import java.util.stream.Collectors;
 
 public class TrainRegister {
   private final ArrayList<TrainDeparture> trainDepartures;
+  private final LocalTime clock;
+
   private final int MAX_TRAIN_NUMBER = 9999;
 
   public TrainRegister() {
     trainDepartures = new ArrayList<>();
+    clock = LocalTime.of(0, 0);
   }
 
   private boolean trainNumberExists(TrainDeparture trainDeparture) {
     return trainDepartures.contains(trainDeparture);
+  }
+
+  public ArrayList<TrainDeparture> addToClockAndDepartTrains(int hours, int minutes) {
+    LocalTime newTime = clock.plusHours(hours).plusMinutes(minutes);
+    ArrayList<TrainDeparture> deletedDepartures = deleteDeparturesBeforeTime(newTime);
+    return deletedDepartures;
+  }
+
+  public LocalTime getClock() {
+    return clock;
   }
 
   public void addTrainDeparture(TrainDeparture trainDeparture) {
@@ -42,7 +55,7 @@ public class TrainRegister {
     // Sort by departure time?
   }
 
-  private ArrayList<TrainDeparture> deleteDeparturesBeforeTime(LocalTime time) {
+  public ArrayList<TrainDeparture> deleteDeparturesBeforeTime(LocalTime time) {
     ArrayList<TrainDeparture> deletedDepartures = new ArrayList<>();
     Iterator<TrainDeparture> iterator = trainDepartures.iterator();
     while (iterator.hasNext()) {
@@ -56,11 +69,12 @@ public class TrainRegister {
     return deletedDepartures;
   }
 
-  public ArrayList<TrainDeparture> sortedByTime() {
-    ArrayList<TrainDeparture> sortedTrainDepartures = new ArrayList<>(trainDepartures);
-    sortedTrainDepartures.sort((trainDeparture1, trainDeparture2) -> trainDeparture1.getDelayedTime()
+  public ArrayList<TrainDeparture> sortByTime() {
+    // Returned before a sorted copy, however the original order does not matter and
+    // it is more effiecient to sort the trainDepartures itself when needed
+    trainDepartures.sort((trainDeparture1, trainDeparture2) -> trainDeparture1.getDelayedTime()
         .compareTo(trainDeparture2.getDelayedTime()));
 
-    return sortedTrainDepartures;
+    return trainDepartures;
   }
 }
