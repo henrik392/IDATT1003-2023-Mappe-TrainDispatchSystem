@@ -55,18 +55,35 @@ public class UserInterface {
           displayDepartures();
           break;
         case UPDATE_CLOCK_OPTION:
+          handleUpdateClock();
           break;
         case SEARCH_MENU_OPTION:
           handleSearchMenu();
           break;
         case ADD_DEPARTURE_OPTION:
-          addDeparture();
+          handleAddDeparture();
           break;
       }
     } while (option != EXIT_OPTION);
   }
 
-  private void addDeparture() {
+  private void handleUpdateClock() {
+    System.out.println("Current time: " + trainRegister.getClock());
+    System.out.println("Enter new time in format (hh:mm):");
+    LocalTime newTime = userInput.readTime();
+    ArrayList<TrainDeparture> departedTrains = trainRegister.setClockAndDepartTrains(newTime);
+
+    if (departedTrains.isEmpty()) {
+      System.out.println("No trains departed");
+    } else {
+      System.out.println("Departed trains:");
+      displayTable(departedTrains);
+    }
+
+    System.out.println();
+  }
+
+  private void handleAddDeparture() {
     System.out.println("Enter departure time in format (hh:mm):");
     LocalTime departureTime = userInput.readTime();
     System.out.println("Enter line:");
@@ -84,6 +101,11 @@ public class UserInterface {
   }
 
   private void displayDepartures() {
+    if (trainRegister.getNumTrains() == 0) {
+      System.out.println("No trains registered\n");
+      return;
+    }
+
     displayTable(trainRegister.sortByTime());
   }
 
@@ -143,6 +165,9 @@ public class UserInterface {
     // Example of an early morning train
     trainRegister
         .addTrainDeparture(new TrainDeparture(LocalTime.of(5, 30), "L7", 350, "Arendal", 7, Duration.ofMinutes(0)));
+
+    // Sort by time
+    trainRegister.sortByTime();
   }
 
   public void start() {

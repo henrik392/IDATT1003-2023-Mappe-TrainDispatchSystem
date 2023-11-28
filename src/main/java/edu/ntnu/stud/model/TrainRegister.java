@@ -7,7 +7,8 @@ import java.util.stream.Collectors;
 
 public class TrainRegister {
   private final ArrayList<TrainDeparture> trainDepartures;
-  private final LocalTime clock;
+  // Burde være final?
+  private LocalTime clock;
 
   private final int MAX_TRAIN_NUMBER = 9999;
 
@@ -20,10 +21,14 @@ public class TrainRegister {
     return trainDepartures.contains(trainDeparture);
   }
 
-  public ArrayList<TrainDeparture> addToClockAndDepartTrains(int hours, int minutes) {
-    LocalTime newTime = clock.plusHours(hours).plusMinutes(minutes);
+  public ArrayList<TrainDeparture> setClockAndDepartTrains(LocalTime newTime) {
+    clock = newTime;
     ArrayList<TrainDeparture> deletedDepartures = deleteDeparturesBeforeTime(newTime);
     return deletedDepartures;
+  }
+
+  public int getNumTrains() {
+    return trainDepartures.size();
   }
 
   public LocalTime getClock() {

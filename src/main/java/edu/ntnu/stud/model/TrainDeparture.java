@@ -83,20 +83,6 @@ public class TrainDeparture {
     return destination;
   }
 
-  /**
-   * Returns a string representation of the TrainDeparture object.
-   * 
-   * @return a string representation of the TrainDeparture object
-   */
-  @Override
-  public String toString() {
-    return ((delay.isZero()) ? departureTime + "\t" : getDelayedTime() + " \u001b[9m" + departureTime + "\u001b[0m")
-        + "\t\t" + line + "\t\t" + trainNumber
-        + "\t\t" + destination + (destination.length() > 8 ? "" : "\t") + "\t" + track;
-
-    // TODO: TO be replaced by TableBuilder
-  }
-
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
