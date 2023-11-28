@@ -66,16 +66,7 @@ public class UserInterface {
   }
 
   private void displayDepartures() {
-    System.out.println("-------------------------------- Train Departures -------------------------------");
-    System.out.println("| Departure\t\tLine\t\tNumber\t\tDestination\tTrack\t|");
-    ArrayList<TrainDeparture> sortedTrainDepartures = trainRegister.sortByTime();
-
-    for (TrainDeparture trainDeparture : sortedTrainDepartures) {
-      System.out.println("| " + trainDeparture + "\t|");
-    }
-
-    System.out.println("---------------------------------------------------------------------------------");
-    System.out.println();
+    displayTable(trainRegister.sortByTime());
   }
 
   private void handleSearchMenu() {
@@ -89,6 +80,31 @@ public class UserInterface {
           break;
       }
     } while (option != EXIT_OPTION);
+  }
+
+  private String formatDelayedDepartureTime(TrainDeparture trainDeparture) {
+    return trainDeparture.getDelay().isZero() ? trainDeparture.getDepartureTime().toString()
+        : trainDeparture.getDelayedTime() + " \u001b[9m" + trainDeparture.getDepartureTime() + "\u001b[0m";
+  }
+
+  private void displayTable(ArrayList<TrainDeparture> trainDepartures) {
+    String[][] table = new String[trainDepartures.size() + 1][6];
+    table[0] = new String[] { "Departure", "Line", "Number", "Destination", "Track", "Delay" };
+
+    for (int i = 0; i < trainDepartures.size(); i++) {
+      TrainDeparture trainDeparture = trainDepartures.get(i);
+      // Maybe more clean to use ArrayList?
+      table[i + 1] = new String[] {
+          formatDelayedDepartureTime(trainDeparture),
+          trainDeparture.getLine(),
+          Integer.toString(trainDeparture.getTrainNumber()),
+          trainDeparture.getDestination(),
+          Integer.toString(trainDeparture.getTrack()),
+          (trainDeparture.getDelay().isZero() ? "" : trainDeparture.getDelay().toMinutes() + " min")
+      };
+    }
+
+    System.out.println(TableBuilder.buildTable(table));
   }
 
   public void init() {

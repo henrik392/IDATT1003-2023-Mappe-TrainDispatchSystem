@@ -114,4 +114,16 @@ public class TrainDeparture {
     return track;
   }
 
+  public LocalTime getDepartureTime() {
+    return departureTime;
+  }
+
+  public String getLine() {
+    return line;
+  }
+
+  public int getTrack() {
+    return track;
+  }
+
 }
