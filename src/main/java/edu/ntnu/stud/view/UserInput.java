@@ -1,5 +1,7 @@
 package edu.ntnu.stud.view;
 
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public class UserInput {
@@ -37,6 +39,32 @@ public class UserInput {
         return Integer.parseInt(scanner.nextLine());
       } catch (NumberFormatException e) {
         System.out.println("Please enter a number");
+      }
+    }
+  }
+
+  public LocalTime readTime() {
+    while (true) {
+      try {
+        String timeString = scanner.nextLine();
+        return LocalTime.parse(timeString);
+      } catch (Exception e) {
+        System.out.println("Please enter a valid time in the format (hh:mm)");
+      }
+    }
+  }
+
+  public Duration readDelay() {
+    while (true) {
+      try {
+        String delayString = scanner.nextLine();
+
+        if (delayString.isEmpty())
+          return Duration.ZERO;
+
+        return Duration.parse("PT" + delayString.toUpperCase());
+      } catch (Exception e) {
+        System.out.println("Please enter a valid delay in the format (hh:mm) or empty string");
       }
     }
   }

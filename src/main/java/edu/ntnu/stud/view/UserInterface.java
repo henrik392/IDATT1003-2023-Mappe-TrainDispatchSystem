@@ -36,7 +36,7 @@ public class UserInterface {
     this.mainMenu = new Menu("Main Menu");
     this.mainMenu.addOption(DISPLAY_DEPARTURES_OPTION, "Display train departures");
     this.mainMenu.addOption(UPDATE_CLOCK_OPTION, "Update clock");
-    this.mainMenu.addOption(SEARCH_MENU_OPTION, "Search");
+    this.mainMenu.addOption(SEARCH_MENU_OPTION, "Search (delete, change track, add delay)");
     this.mainMenu.addOption(ADD_DEPARTURE_OPTION, "Add train departure");
     this.mainMenu.addOption(EXIT_OPTION, "Exit application");
 
@@ -60,9 +60,27 @@ public class UserInterface {
           handleSearchMenu();
           break;
         case ADD_DEPARTURE_OPTION:
+          addDeparture();
           break;
       }
     } while (option != EXIT_OPTION);
+  }
+
+  private void addDeparture() {
+    System.out.println("Enter departure time in format (hh:mm):");
+    LocalTime departureTime = userInput.readTime();
+    System.out.println("Enter line:");
+    String line = userInput.readString();
+    System.out.println("Enter train number:");
+    int trainNumber = userInput.readInt();
+    System.out.println("Enter destination:");
+    String destination = userInput.readString();
+    System.out.println("Enter track:");
+    int track = userInput.readInt();
+    System.out.println("Enter delay in minutes (or empty for no delay):");
+    Duration delay = userInput.readDelay();
+
+    trainRegister.addTrainDeparture(new TrainDeparture(departureTime, line, trainNumber, destination, track, delay));
   }
 
   private void displayDepartures() {
