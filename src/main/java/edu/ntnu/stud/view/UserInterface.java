@@ -21,6 +21,12 @@ public class UserInterface {
   private final int SEARCH_BY_TRAIN_NUMBER_OPTION = 1;
   private final int SEARCH_BY_DESTINATION_OPTION = 2;
 
+  // Process trains menu options.
+  private final int DISPLAY_FOUND_TRAINS_OPTION = 1;
+  private final int DELETE_TRAIN_OPTION = 2;
+  private final int CHANGE_TRACK_OPTION = 3;
+  private final int ADD_DELAY_OPTION = 4;
+
   // Dependencies
   private final TrainRegister trainRegister;
   private final UserInput userInput;
@@ -28,22 +34,15 @@ public class UserInterface {
   // Menus
   private final Menu mainMenu;
   private final Menu searchMenu;
+  private final Menu processTrainsMenu;
 
   public UserInterface() {
     this.trainRegister = new TrainRegister();
     this.userInput = new UserInput();
 
     this.mainMenu = new Menu("Main Menu");
-    this.mainMenu.addOption(DISPLAY_DEPARTURES_OPTION, "Display train departures");
-    this.mainMenu.addOption(UPDATE_CLOCK_OPTION, "Update clock");
-    this.mainMenu.addOption(SEARCH_MENU_OPTION, "Search (delete, change track, add delay)");
-    this.mainMenu.addOption(ADD_DEPARTURE_OPTION, "Add train departure");
-    this.mainMenu.addOption(EXIT_OPTION, "Exit application");
-
     this.searchMenu = new Menu("Search Menu");
-    this.searchMenu.addOption(SEARCH_BY_TRAIN_NUMBER_OPTION, "Search by train number");
-    this.searchMenu.addOption(SEARCH_BY_DESTINATION_OPTION, "Search by destination");
-    this.searchMenu.addOption(EXIT_OPTION, "Exit to main menu");
+    this.processTrainsMenu = new Menu("Process Found Trains Menu");
   }
 
   private void handleMainMenu() {
@@ -84,17 +83,11 @@ public class UserInterface {
   }
 
   private void handleAddDeparture() {
-    System.out.println("Enter departure time in format (hh:mm):");
     LocalTime departureTime = userInput.readTime();
-    System.out.println("Enter line:");
-    String line = userInput.readString();
-    System.out.println("Enter train number:");
-    int trainNumber = userInput.readInt();
-    System.out.println("Enter destination:");
-    String destination = userInput.readString();
-    System.out.println("Enter track:");
-    int track = userInput.readInt();
-    System.out.println("Enter delay in minutes (or empty for no delay):");
+    String line = userInput.readLine();
+    int trainNumber = userInput.readTrainNumber();
+    String destination = userInput.readDestination();
+    int track = userInput.readTrack();
     Duration delay = userInput.readDelay();
 
     trainRegister.addTrainDeparture(new TrainDeparture(departureTime, line, trainNumber, destination, track, delay));
@@ -115,11 +108,93 @@ public class UserInterface {
       option = userInput.getMenuOption(searchMenu);
       switch (option) {
         case SEARCH_BY_TRAIN_NUMBER_OPTION:
+          handleSearchByTrainNumber();
           break;
         case SEARCH_BY_DESTINATION_OPTION:
+          handleSearchByDestination();
           break;
       }
     } while (option != EXIT_OPTION);
+  }
+
+  private void handleSearchByTrainNumber() {
+    int trainNumber = userInput.readTrainNumber();
+    TrainDeparture trainDeparture = trainRegister.getTrainDepatureFromTrainNumber(trainNumber);
+
+    if (trainDeparture == null) {
+      System.out.println("Train number not found\n");
+      return;
+    }
+
+    System.out.println("Train found:");
+    displayTable(trainDeparture.toArrayList());
+
+    handleProcessTrainsMenu(trainDeparture.toArrayList());
+  }
+
+  private void handleSearchByDestination() {
+    String destination = userInput.readDestination();
+    ArrayList<TrainDeparture> trainDepartures = trainRegister.getTrainDeparturesToDestination(destination);
+
+    if (trainDepartures.isEmpty()) {
+      System.out.println("No trains found\n");
+      return;
+    }
+
+    System.out.println("Trains found:");
+    displayTable(trainDepartures);
+
+    handleProcessTrainsMenu(trainDepartures);
+  }
+
+  private void handleProcessTrainsMenu(ArrayList<TrainDeparture> foundTrainDepartures) {
+    int option;
+    do {
+      option = userInput.getMenuOption(processTrainsMenu);
+      switch (option) {
+        case DISPLAY_FOUND_TRAINS_OPTION:
+          displayTable(foundTrainDepartures);
+          break;
+        case DELETE_TRAIN_OPTION:
+          handleDeleteTrains(foundTrainDepartures);
+          break;
+        case CHANGE_TRACK_OPTION:
+          handleChangeTrack(foundTrainDepartures);
+          break;
+        case ADD_DELAY_OPTION:
+          handleAddDelay(foundTrainDepartures);
+          break;
+      }
+    } while (option != EXIT_OPTION && !foundTrainDepartures.isEmpty());
+  }
+
+  private void handleDeleteTrains(ArrayList<TrainDeparture> foundTrainDepartures) {
+    System.out.println("Are you sure you want to delete these trains?");
+    boolean answer = userInput.confirmationDialog();
+
+    if (answer) {
+      System.out.println("Deleted " + foundTrainDepartures.size() + " trains");
+      trainRegister.deleteTrainDepartures(foundTrainDepartures);
+      foundTrainDepartures.clear();
+      return;
+    }
+
+    System.out.println("Trains not deleted");
+  }
+
+  private void handleChangeTrack(ArrayList<TrainDeparture> foundTrainDepartures) {
+    // Maybe not allow mulitple trains to change to the same track??
+    int newTrack = userInput.readTrack();
+    trainRegister.changeTracks(foundTrainDepartures, newTrack);
+
+    System.out.println("Changed " + foundTrainDepartures.size() + " trains to track " + newTrack);
+  }
+
+  private void handleAddDelay(ArrayList<TrainDeparture> foundTrainDepartures) {
+    int minutes = (int) userInput.readDelay().toMinutes();
+    trainRegister.addDelay(foundTrainDepartures, minutes);
+
+    System.out.println("Added " + minutes + " minutes to " + foundTrainDepartures.size() + " trains");
   }
 
   private String formatDelayedDepartureTime(TrainDeparture trainDeparture) {
@@ -148,6 +223,27 @@ public class UserInterface {
   }
 
   public void init() {
+    // Add options to main menu
+    this.mainMenu.addOption(DISPLAY_DEPARTURES_OPTION, "Display train departures");
+    this.mainMenu.addOption(UPDATE_CLOCK_OPTION, "Update clock");
+    this.mainMenu.addOption(SEARCH_MENU_OPTION, "Search (delete, change track, add delay)");
+    this.mainMenu.addOption(ADD_DEPARTURE_OPTION, "Add train departure");
+    this.mainMenu.addOption(EXIT_OPTION, "Exit application");
+
+    // Add options to search menu
+    this.searchMenu.addOption(SEARCH_BY_TRAIN_NUMBER_OPTION, "Search by train number");
+    this.searchMenu.addOption(SEARCH_BY_DESTINATION_OPTION, "Search by destination");
+    this.searchMenu.addOption(EXIT_OPTION, "Exit to main menu");
+
+    // Add options to process trains menu
+    this.processTrainsMenu.addOption(DISPLAY_FOUND_TRAINS_OPTION, "Display found trains");
+    this.processTrainsMenu.addOption(DELETE_TRAIN_OPTION, "Delete train");
+    this.processTrainsMenu.addOption(CHANGE_TRACK_OPTION, "Change track");
+    this.processTrainsMenu.addOption(ADD_DELAY_OPTION, "Add delay");
+    this.processTrainsMenu.addOption(EXIT_OPTION, "Back to search menu");
+  }
+
+  public void start() {
     // Additional train departures not added in order of departure time
     trainRegister
         .addTrainDeparture(new TrainDeparture(LocalTime.of(12, 00), "L2", 100, "Oslo", 2, Duration.ofMinutes(0)));
@@ -166,11 +262,17 @@ public class UserInterface {
     trainRegister
         .addTrainDeparture(new TrainDeparture(LocalTime.of(5, 30), "L7", 350, "Arendal", 7, Duration.ofMinutes(0)));
 
+    // Example of a train to same destination as another train
+    trainRegister.addTrainDeparture(
+        new TrainDeparture(LocalTime.of(20, 00), "L8", 400, "Oslo", 8, Duration.ofMinutes(5)));
+
     // Sort by time
     trainRegister.sortByTime();
+
+    handleMainMenu();
   }
 
-  public void start() {
-    handleMainMenu();
+  public void close() {
+    userInput.close();
   }
 }

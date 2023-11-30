@@ -1,6 +1,7 @@
 package edu.ntnu.stud.model;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.time.Duration;
 
 /**
@@ -28,16 +29,32 @@ public class TrainDeparture {
    */
   public TrainDeparture(LocalTime departureTime, String line, int trainNumber, String destination, int track,
       Duration delay) {
+    if (departureTime == null)
+      throw new IllegalArgumentException("Departure time cannot be null");
+    if (line == null)
+      throw new IllegalArgumentException("Line cannot be null");
+    if (trainNumber < 0)
+      throw new IllegalArgumentException("Train number cannot be negative");
+    if (destination == null)
+      throw new IllegalArgumentException("Destination cannot be null");
+    if (track < 0)
+      throw new IllegalArgumentException("Track cannot be negative");
+    if (delay.isNegative())
+      throw new IllegalArgumentException("Delay cannot be negative");
+
     this.departureTime = departureTime;
     this.line = line;
     this.trainNumber = trainNumber;
     this.destination = destination;
     this.track = track;
 
-    if (delay.isNegative())
-      throw new IllegalArgumentException("Delay cannot be negative");
+    this.delay = delay == null ? Duration.ZERO : delay;
+  }
 
-    this.delay = delay;
+  public ArrayList<TrainDeparture> toArrayList() {
+    ArrayList<TrainDeparture> list = new ArrayList<>();
+    list.add(this);
+    return list;
   }
 
   /**
@@ -112,4 +129,11 @@ public class TrainDeparture {
     return track;
   }
 
+  // Set track
+  public void setTrack(int track) {
+    if (track < 0)
+      throw new IllegalArgumentException("Track cannot be negative");
+
+    this.track = track; 
+  }
 }

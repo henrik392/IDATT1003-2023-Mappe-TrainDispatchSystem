@@ -27,18 +27,18 @@ public class UserInput {
     }
   }
 
-  public String readString() {
+  private String readString() {
     return scanner.nextLine();
   }
 
-  public int readInt() {
+  private int readInt() {
     // Uses nextLine() instead of nextInt() to avoid problems with newlines in the
     // input stream
     while (true) {
       try {
         return Integer.parseInt(scanner.nextLine());
       } catch (NumberFormatException e) {
-        System.out.println("Please enter a number");
+        System.out.println("Please enter an integer");
       }
     }
   }
@@ -46,10 +46,11 @@ public class UserInput {
   public LocalTime readTime() {
     while (true) {
       try {
+        System.out.println("Enter departure time in format (hh:mm):");
         String timeString = scanner.nextLine();
         return LocalTime.parse(timeString);
       } catch (Exception e) {
-        System.out.println("Please enter a valid time in the format (hh:mm)");
+        System.out.println("Please enter a valid time in the format (hh:mm)\n");
       }
     }
   }
@@ -57,15 +58,83 @@ public class UserInput {
   public Duration readDelay() {
     while (true) {
       try {
+        System.out.println("Enter delay in minutes (or empty for no delay):");
         String delayString = scanner.nextLine();
 
         if (delayString.isEmpty())
           return Duration.ZERO;
 
-        return Duration.parse("PT" + delayString.toUpperCase());
+        return Duration.ofMinutes(Long.parseLong(delayString));
       } catch (Exception e) {
-        System.out.println("Please enter a valid delay in the format (hh:mm) or empty string");
+        System.out.println("Please enter a valid delay in minutes\n");
       }
+    }
+  }
+
+  public int readTrainNumber() {
+    while (true) {
+      System.out.println("Enter train number:");
+      int trainNumber = readInt();
+
+      if (trainNumber > 0)
+        return trainNumber;
+
+      System.out.println("Train number cannot be negative\n");
+    }
+  }
+
+  public int readTrack() {
+    while (true) {
+      System.out.println("Enter track:");
+      int track = readInt();
+
+      if (track > 0)
+        return track;
+
+      System.out.println("Track cannot be negative\n");
+    }
+  }
+
+  public String readLine() {
+    while (true) {
+      System.out.println("Enter line:");
+      String line = readString();
+
+      if (!line.isEmpty())
+        return line;
+
+      System.out.println("Line cannot be empty\n");
+    }
+  }
+
+  public String readDestination() {
+    while (true) {
+      System.out.println("Enter destination:");
+      String destination = readString();
+
+      if (!destination.isEmpty())
+        return destination;
+
+      System.out.println("Destination cannot be empty\n");
+    }
+  }
+
+  public void close() {
+    scanner.close();
+  }
+
+  public boolean confirmationDialog() {
+    while (true) {
+      System.out.println("Are you sure? (yes/no)");
+      String input = readString().toLowerCase();
+
+      if (input.charAt(0) == 'y')
+        return true;
+
+      if (input.charAt(0) == 'n')
+        return false;
+
+      System.out.println("Please enter yes or no\n");
     }
   }
 }

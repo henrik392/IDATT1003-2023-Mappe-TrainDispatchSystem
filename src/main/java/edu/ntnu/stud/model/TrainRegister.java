@@ -21,6 +21,11 @@ public class TrainRegister {
     return trainDepartures.contains(trainDeparture);
   }
 
+  // private boolean trainNumberExists(int trainNumber) {
+  // return trainDepartures.stream().anyMatch(trainDeparture ->
+  // trainDeparture.getTrainNumber() == trainNumber);
+  // }
+
   public ArrayList<TrainDeparture> setClockAndDepartTrains(LocalTime newTime) {
     clock = newTime;
     ArrayList<TrainDeparture> deletedDepartures = deleteDeparturesBeforeTime(newTime);
@@ -74,6 +79,14 @@ public class TrainRegister {
     return deletedDepartures;
   }
 
+  public void deleteTrainDepartures(ArrayList<TrainDeparture> trainDepartures) {
+    if (!this.trainDepartures.containsAll(trainDepartures))
+      throw new IllegalArgumentException("One or more train departures does not exist");
+    // TODO: Add test for this
+
+    this.trainDepartures.removeAll(trainDepartures);
+  }
+
   public ArrayList<TrainDeparture> sortByTime() {
     // Returned before a sorted copy, however the original order does not matter and
     // it is more effiecient to sort the trainDepartures itself when needed
@@ -81,5 +94,19 @@ public class TrainRegister {
         .compareTo(trainDeparture2.getDelayedTime()));
 
     return trainDepartures;
+  }
+
+  public void changeTracks(ArrayList<TrainDeparture> trainDepartures, int newTrack) {
+    if (!this.trainDepartures.containsAll(trainDepartures))
+      throw new IllegalArgumentException("One or more train departures does not exist");
+
+    trainDepartures.forEach(trainDeparture -> trainDeparture.setTrack(newTrack));
+  }
+
+  public void addDelay(ArrayList<TrainDeparture> trainDepartures, int minutes) {
+    if (!this.trainDepartures.containsAll(trainDepartures))
+      throw new IllegalArgumentException("One or more train departures does not exist");
+
+    trainDepartures.forEach(trainDeparture -> trainDeparture.addDelay(minutes));
   }
 }
