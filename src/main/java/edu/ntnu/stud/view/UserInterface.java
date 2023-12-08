@@ -28,7 +28,6 @@ public class UserInterface {
 
   // Dependencies
   private final TrainRegister trainRegister;
-  private final UserInput userInput;
 
   // Menus
   private final Menu mainMenu;
@@ -37,7 +36,6 @@ public class UserInterface {
 
   public UserInterface() {
     this.trainRegister = new TrainRegister();
-    this.userInput = new UserInput();
 
     this.mainMenu = new Menu("Main Menu");
     this.searchMenu = new Menu("Search Menu");
@@ -47,7 +45,7 @@ public class UserInterface {
   private void handleMainMenu() {
     int option;
     do {
-      option = userInput.getMenuOption(mainMenu);
+      option = UserInput.getMenuOption(mainMenu);
       switch (option) {
         case DISPLAY_DEPARTURES_OPTION:
           displayDepartures();
@@ -68,7 +66,7 @@ public class UserInterface {
   private void handleUpdateClock() {
     System.out.println("Current time: " + trainRegister.getClock());
     System.out.println("Enter new time in format (hh:mm):");
-    LocalTime newTime = userInput.readTime();
+    LocalTime newTime = UserInput.readTime();
     trainRegister.setClock(newTime);
     ArrayList<TrainDeparture> departedTrains = trainRegister.departTrains();
 
@@ -83,12 +81,12 @@ public class UserInterface {
   }
 
   private void handleAddDeparture() {
-    LocalTime departureTime = userInput.readTime();
-    String line = userInput.readLine();
-    int trainNumber = userInput.readTrainNumber();
-    String destination = userInput.readDestination();
-    int track = userInput.readTrack();
-    Duration delay = userInput.readDelay();
+    LocalTime departureTime = UserInput.readTime();
+    String line = UserInput.readLine();
+    int trainNumber = UserInput.readTrainNumber();
+    String destination = UserInput.readDestination();
+    int track = UserInput.readTrack();
+    Duration delay = UserInput.readDelay();
 
     trainRegister.addTrainDeparture(
         new TrainDeparture(departureTime, line, trainNumber, destination, track, delay));
@@ -106,7 +104,7 @@ public class UserInterface {
   private void handleSearchMenu() {
     int option;
     do {
-      option = userInput.getMenuOption(searchMenu);
+      option = UserInput.getMenuOption(searchMenu);
       switch (option) {
         case SEARCH_BY_TRAIN_NUMBER_OPTION:
           handleSearchByTrainNumber();
@@ -119,7 +117,7 @@ public class UserInterface {
   }
 
   private void handleSearchByTrainNumber() {
-    int trainNumber = userInput.readTrainNumber();
+    int trainNumber = UserInput.readTrainNumber();
     TrainDeparture trainDeparture = trainRegister.findDepartureByTrainNumber(trainNumber);
 
     if (trainDeparture == null) {
@@ -134,7 +132,7 @@ public class UserInterface {
   }
 
   private void handleSearchByDestination() {
-    String destination = userInput.readDestination();
+    String destination = UserInput.readDestination();
     ArrayList<TrainDeparture> trainDepartures =
         trainRegister.findDeparturesToDestination(destination);
 
@@ -152,7 +150,7 @@ public class UserInterface {
   private void handleProcessTrainsMenu(ArrayList<TrainDeparture> foundTrainDepartures) {
     int option;
     do {
-      option = userInput.getMenuOption(processTrainsMenu);
+      option = UserInput.getMenuOption(processTrainsMenu);
       switch (option) {
         case DISPLAY_FOUND_TRAINS_OPTION:
           displayTable(foundTrainDepartures);
@@ -172,7 +170,7 @@ public class UserInterface {
 
   private void handleDeleteTrains(ArrayList<TrainDeparture> foundTrainDepartures) {
     System.out.println("Are you sure you want to delete these trains?");
-    boolean answer = userInput.confirmationDialog();
+    boolean answer = UserInput.confirmationDialog();
 
     if (answer) {
       System.out.println("Deleted " + foundTrainDepartures.size() + " trains");
@@ -186,14 +184,14 @@ public class UserInterface {
 
   private void handleChangeTrack(ArrayList<TrainDeparture> foundTrainDepartures) {
     // Maybe not allow mulitple trains to change to the same track??
-    int newTrack = userInput.readTrack();
+    int newTrack = UserInput.readTrack();
     trainRegister.changeTracks(foundTrainDepartures, newTrack);
 
     System.out.println("Changed " + foundTrainDepartures.size() + " trains to track " + newTrack);
   }
 
   private void handleAddDelay(ArrayList<TrainDeparture> foundTrainDepartures) {
-    int minutes = (int) userInput.readDelay().toMinutes();
+    int minutes = (int) UserInput.readDelay().toMinutes();
     trainRegister.addDelay(foundTrainDepartures, minutes);
 
     System.out.println(
@@ -280,9 +278,5 @@ public class UserInterface {
     trainRegister.sortByDelayedTime();
 
     handleMainMenu();
-  }
-
-  public void close() {
-    userInput.close();
   }
 }
