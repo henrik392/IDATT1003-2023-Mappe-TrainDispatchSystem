@@ -47,7 +47,7 @@ public class UserInput {
       if (!input.isEmpty()) {
         return input;
       }
-      System.out.println("Enter non-empty input");
+      System.out.println("Input cannot be empty");
     }
   }
 
@@ -74,7 +74,7 @@ public class UserInput {
   public static LocalTime readTime() {
     while (true) {
       try {
-        System.out.println("Enter departure time in format (hh:mm):");
+        System.out.println("Enter new time in format (hh:mm):");
         String timeString = readNonEmptyString();
         return LocalTime.parse(timeString);
       } catch (Exception e) {
