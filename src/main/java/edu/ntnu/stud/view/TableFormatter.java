@@ -1,15 +1,24 @@
 package edu.ntnu.stud.view;
 
-public class TableBuilder {
+/** The TableFormatter class provides utility methods for building formatted tables. */
+public class TableFormatter {
   private static int padding = 2;
 
-  private TableBuilder() {
+  private TableFormatter() {
     throw new IllegalStateException("Utility class");
   }
 
+  /**
+   * Builds a formatted table as a string.
+   *
+   * @param table The 2D array representing the table data.
+   * @return The formatted table as a string.
+   * @throws IllegalArgumentException if the table is empty.
+   */
   public static String buildTable(String[][] table) {
-    if (table.length == 0)
+    if (table.length == 0) {
       throw new IllegalArgumentException("Table cannot be empty");
+    }
 
     int[] columnWidths = getColumnWidths(table);
     StringBuilder sb = new StringBuilder();
@@ -27,6 +36,13 @@ public class TableBuilder {
     return sb.toString();
   }
 
+  /**
+   * Builds a row of a table with the given rowData and columnWidths.
+   *
+   * @param rowData the data for each column in the row
+   * @param columnWidths the widths of each column in the table
+   * @return the formatted row as a string
+   */
   private static String buildRow(String[] rowData, int[] columnWidths) {
     StringBuilder sb = new StringBuilder();
 
@@ -43,6 +59,12 @@ public class TableBuilder {
     return sb.toString();
   }
 
+  /**
+   * Builds a horizontal line with '-' and '+' characters based on the given column widths.
+   *
+   * @param columnWidths an array of column widths
+   * @return the horizontal line string
+   */
   private static String buildHorizontalLine(int[] columnWidths) {
     StringBuilder sb = new StringBuilder();
 
@@ -56,14 +78,26 @@ public class TableBuilder {
     return sb.toString();
   }
 
-  public static int getRenderedLength(String str) {
+  /**
+   * Calculates the rendered length of a string by removing ANSI escape codes.
+   *
+   * @param str the input string
+   * @return the length of the string without ANSI codes
+   */
+  private static int getRenderedLength(String str) {
     String ansiEscapeRegex = "\u001b\\[[;\\d]*m";
     String withoutAnsi = str.replaceAll(ansiEscapeRegex, "");
 
-    // Return the length of the string without ANSI codes
     return withoutAnsi.length();
   }
 
+  /**
+   * Calculates the maximum width for each column in a table. Uses {@link
+   * #getRenderedLength(String)} to calculate the rendered length of each string.
+   *
+   * @param table The table represented as a 2D array of strings.
+   * @return An array of integers representing the maximum width for each column.
+   */
   private static int[] getColumnWidths(String[][] table) {
     int[] columnWidths = new int[table[0].length];
 
