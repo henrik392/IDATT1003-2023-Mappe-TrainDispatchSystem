@@ -197,9 +197,10 @@ public class TrainRegister {
     while (iterator.hasNext()) {
       TrainDeparture trainDeparture = iterator.next();
       if (trainDeparture.getDepartureTimeWithDelay().isBefore(time)
-          && trainDeparture
-              .getDepartureTimeWithDelay()
-              .isAfter(trainDeparture.getDepartureTime())) {
+          && (trainDeparture.getDepartureTimeWithDelay().isAfter(trainDeparture.getDepartureTime())
+              || trainDeparture
+                  .getDepartureTimeWithDelay()
+                  .equals(trainDeparture.getDepartureTime()))) {
         deletedDepartures.add(trainDeparture);
         iterator.remove();
       }
