@@ -6,25 +6,30 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
+/**
+ * The UserInterface class represents the user interface of the Train Dispatch System. It provides
+ * methods for handling and displaying menus, and interacting with the TrainRegister. It can update
+ * time and depart trains, . search, add, delete, change track, and add delay to train departures
+ */
 public class UserInterface {
   // Default options.
-  private final int EXIT_OPTION = 9;
+  private static final int EXIT_OPTION = 9;
 
   // Main menu options.
-  private final int DISPLAY_DEPARTURES_OPTION = 1;
-  private final int UPDATE_CLOCK_OPTION = 2;
-  private final int SEARCH_MENU_OPTION = 3;
-  private final int ADD_DEPARTURE_OPTION = 4;
+  private static final int DISPLAY_DEPARTURES_OPTION = 1;
+  private static final int UPDATE_CLOCK_OPTION = 2;
+  private static final int SEARCH_MENU_OPTION = 3;
+  private static final int ADD_DEPARTURE_OPTION = 4;
 
   // Search menu options.
-  private final int SEARCH_BY_TRAIN_NUMBER_OPTION = 1;
-  private final int SEARCH_BY_DESTINATION_OPTION = 2;
+  private static final int SEARCH_BY_TRAIN_NUMBER_OPTION = 1;
+  private static final int SEARCH_BY_DESTINATION_OPTION = 2;
 
   // Process trains menu options.
-  private final int DISPLAY_FOUND_TRAINS_OPTION = 1;
-  private final int DELETE_TRAIN_OPTION = 2;
-  private final int CHANGE_TRACK_OPTION = 3;
-  private final int ADD_DELAY_OPTION = 4;
+  private static final int DISPLAY_FOUND_TRAINS_OPTION = 1;
+  private static final int DELETE_TRAIN_OPTION = 2;
+  private static final int CHANGE_TRACK_OPTION = 3;
+  private static final int ADD_DELAY_OPTION = 4;
 
   // Dependencies
   private final TrainRegister trainRegister;
@@ -58,6 +63,8 @@ public class UserInterface {
           break;
         case ADD_DEPARTURE_OPTION:
           handleAddDeparture();
+          break;
+        default:
           break;
       }
     } while (option != EXIT_OPTION);
@@ -112,6 +119,8 @@ public class UserInterface {
         case SEARCH_BY_DESTINATION_OPTION:
           handleSearchByDestination();
           break;
+        default:
+          break;
       }
     } while (option != EXIT_OPTION);
   }
@@ -163,6 +172,8 @@ public class UserInterface {
           break;
         case ADD_DELAY_OPTION:
           handleAddDelay(foundTrainDepartures);
+          break;
+        default:
           break;
       }
     } while (option != EXIT_OPTION && !foundTrainDepartures.isEmpty());
