@@ -7,7 +7,7 @@ import edu.ntnu.stud.view.UserInterface;
  *
  * <h2>Main</h2>
  *
- * The Main class contains the main method that starts the program.
+ * <p>The Main class contains the main method that starts the program.
  */
 public class Main {
   /**
