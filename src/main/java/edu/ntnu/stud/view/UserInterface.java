@@ -7,6 +7,10 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 /**
+ *
+ *
+ * <h2>UserInterface</h2>
+ *
  * The UserInterface class represents the user interface of the Train Dispatch System. It provides
  * methods for handling and displaying menus, and interacting with the TrainRegister. It can update
  * time and depart trains. search, add, delete, change track, and add delay to train departures

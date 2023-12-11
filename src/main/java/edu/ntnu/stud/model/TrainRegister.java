@@ -7,6 +7,10 @@ import java.util.Iterator;
 import java.util.stream.Collectors;
 
 /**
+ *
+ *
+ * <h2>TrainRegister</h2>
+ *
  * TrainRegister represents a register of train departures. It provides methods to add, delete, and
  * modify train departures, as well as retrieve information about the train departures.
  */

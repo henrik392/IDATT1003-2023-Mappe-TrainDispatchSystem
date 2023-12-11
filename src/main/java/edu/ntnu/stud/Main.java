@@ -2,7 +2,13 @@ package edu.ntnu.stud;
 
 import edu.ntnu.stud.view.UserInterface;
 
-/** The Main class contains the main method that starts the program. */
+/**
+ *
+ *
+ * <h2>Main</h2>
+ *
+ * The Main class contains the main method that starts the program.
+ */
 public class Main {
   /**
    * The main method is the entry point of the program. It creates an instance of the UserInterface

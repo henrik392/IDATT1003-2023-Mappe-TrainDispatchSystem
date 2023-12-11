@@ -5,6 +5,10 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 /**
+ *
+ *
+ * <h2>TrainDeparture</h2>
+ *
  * The TrainDeparture class represents a train departure with its departure time, line, train
  * number, destination, track, and delay.
  */
