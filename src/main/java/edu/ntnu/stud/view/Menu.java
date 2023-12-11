@@ -29,7 +29,7 @@ public class Menu {
     if (i < 0) {
       throw new IllegalArgumentException("Option number cannot be negative");
     }
-    if (options.containsKey(i)) {
+    if (hasOption(i)) {
       throw new IllegalArgumentException("Option number already exists");
     }
     if (string == null) {
