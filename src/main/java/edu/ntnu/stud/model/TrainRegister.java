@@ -32,6 +32,15 @@ public class TrainRegister {
     return trainDepartures;
   }
 
+  /**
+   * Returns the number of trains in the train register.
+   *
+   * @return the number of trains
+   */
+  public int getNumTrains() {
+    return trainDepartures.size();
+  }
+
   public LocalTime getClock() {
     return clock;
   }
@@ -48,10 +57,6 @@ public class TrainRegister {
     }
 
     this.clock = clock;
-  }
-
-  public int getNumTrains() {
-    return trainDepartures.size();
   }
 
   /**
