@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import edu.ntnu.stud.model.TrainDeparture;
-import edu.ntnu.stud.model.TrainRegister;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
