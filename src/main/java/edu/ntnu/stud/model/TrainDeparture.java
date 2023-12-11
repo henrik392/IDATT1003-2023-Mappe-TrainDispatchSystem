@@ -63,7 +63,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
    * @param departureTime the departure time to be set
    * @throws IllegalArgumentException if the departure time is null
    */
-  public void setDepartureTime(LocalTime departureTime) {
+  private void setDepartureTime(LocalTime departureTime) {
     if (departureTime == null) {
       throw new NullPointerException("Departure time cannot be null");
     }
@@ -98,7 +98,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
    * @throws IllegalArgumentException if the train number is negative or greater than the maximum
    *     train number
    */
-  public void setTrainNumber(int trainNumber) {
+  private void setTrainNumber(int trainNumber) {
     if (trainNumber < 0) {
       throw new IllegalArgumentException("Train number cannot be negative");
     }
@@ -118,7 +118,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
    * @param destination the destination of the train departure
    * @throws IllegalArgumentException if the destination is null
    */
-  public void setDestination(String destination) {
+  private void setDestination(String destination) {
     if (destination == null) {
       throw new NullPointerException("Destination cannot be null");
     }
