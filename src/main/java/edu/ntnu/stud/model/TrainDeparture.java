@@ -9,7 +9,7 @@ import java.util.ArrayList;
  *
  * <h2>TrainDeparture</h2>
  *
- * The TrainDeparture class represents a train departure with its departure time, line, train
+ * <p>The TrainDeparture class represents a train departure with its departure time, line, train
  * number, destination, track, and delay.
  */
 public class TrainDeparture implements Comparable<TrainDeparture> {
