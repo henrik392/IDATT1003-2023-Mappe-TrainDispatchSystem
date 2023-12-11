@@ -80,7 +80,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
    * @param line the line of the train departure
    * @throws IllegalArgumentException if the line is null
    */
-  public void setLine(String line) {
+  private void setLine(String line) {
     if (line == null) {
       throw new NullPointerException("Line cannot be null");
     }
