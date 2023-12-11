@@ -24,6 +24,7 @@ public class TrainRegisterTest {
   private TrainRegister trainRegister;
   private TrainDeparture trainDeparture;
   private TrainDeparture lateTrainDeparture;
+  private TrainDeparture noTrackTrainDeparture;
 
   /** Sets up the test environment before each test case. */
   @BeforeEach
@@ -57,6 +58,11 @@ public class TrainRegisterTest {
     lateTrainDeparture =
         new TrainDeparture(LocalTime.of(23, 0), "L8", 400, "Oslo", 8, Duration.ofMinutes(60));
     trainRegister.addTrainDeparture(lateTrainDeparture);
+
+    // Departure containing no track
+    noTrackTrainDeparture =
+        new TrainDeparture(LocalTime.of(14, 0), "L9", 450, "Ålesund", 0, Duration.ofMinutes(0));
+    trainRegister.addTrainDeparture(noTrackTrainDeparture);
   }
 
   /** This nested class contains negative tests for the TrainRegister class. */
@@ -147,6 +153,25 @@ public class TrainRegisterTest {
       assertTrue(deletedDepartures.contains(trainDeparture));
       assertFalse(trainRegister.getTrainDepartures().contains(trainDeparture));
       assertTrue(prevSize == trainRegister.getTrainDepartures().size() + deletedDepartures.size());
+    }
+
+    @Test
+    @DisplayName("Returns a list of all departures with a track number")
+    public void testGetDeparturesWithTrack() {
+      ArrayList<TrainDeparture> departuresWithTrack = trainRegister.getDeparturesWithTrack();
+      assertTrue(departuresWithTrack.contains(trainDeparture));
+      assertTrue(departuresWithTrack.size() == trainRegister.getTrainDepartures().size() - 1);
+      assertFalse(departuresWithTrack.contains(noTrackTrainDeparture));
+    }
+
+    @Test
+    @DisplayName("Returns a list of all departures without a track number")
+    public void testGetDeparturesWithoutTrack() {
+      ArrayList<TrainDeparture> departuresWithoutTrack =
+          trainRegister.getDeparturesWithoutTrack();
+      assertTrue(departuresWithoutTrack.contains(noTrackTrainDeparture));
+      assertTrue(departuresWithoutTrack.size() == 1);
+      assertFalse(departuresWithoutTrack.contains(trainDeparture));
     }
 
     @Test
