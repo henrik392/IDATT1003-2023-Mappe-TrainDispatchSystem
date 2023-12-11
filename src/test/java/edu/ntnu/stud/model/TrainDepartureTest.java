@@ -1,9 +1,8 @@
-package edu.ntnu.stud;
+package edu.ntnu.stud.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import edu.ntnu.stud.model.TrainDeparture;
 import java.time.Duration;
 import java.time.LocalTime;
 import org.junit.jupiter.api.BeforeEach;
