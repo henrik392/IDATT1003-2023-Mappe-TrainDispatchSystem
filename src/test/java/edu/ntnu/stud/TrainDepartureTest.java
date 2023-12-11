@@ -44,6 +44,69 @@ public class TrainDepartureTest {
                   LocalTime.of(13, 45), "L1", 123, "Trondheim", 1, Duration.ofMinutes(-5)),
           "Delay cannot be negative");
     }
+
+    @Test
+    @DisplayName("Constructor should throw NullPointerException from null departure time")
+    public void testConstructorWithNullDepartureTime() {
+      assertThrows(
+          NullPointerException.class,
+          () -> new TrainDeparture(null, "L1", 123, "Destination", 1, Duration.ofMinutes(5)),
+          "Departure time cannot be null");
+    }
+
+    @Test
+    @DisplayName("Constructor should throw NullPointerException from null line")
+    public void testConstructorWithNullLine() {
+      assertThrows(
+          NullPointerException.class,
+          () ->
+              new TrainDeparture(
+                  LocalTime.of(13, 45), null, 123, "Destination", 1, Duration.ofMinutes(5)),
+          "Line cannot be null");
+    }
+
+    @Test
+    @DisplayName("Constructor should throw IllegalArgumentException from negative train number")
+    public void testConstructorWithNegativeTrainNumber() {
+      assertThrows(
+          IllegalArgumentException.class,
+          () ->
+              new TrainDeparture(
+                  LocalTime.of(13, 45), "L1", -1, "Destination", 1, Duration.ofMinutes(5)),
+          "Train number cannot be negative");
+    }
+
+    @Test
+    @DisplayName(
+        "Constructor should throw IllegalArgumentException from train number greater than max")
+    public void testConstructorWithTrainNumberGreaterThanMax() {
+      assertThrows(
+          IllegalArgumentException.class,
+          () ->
+              new TrainDeparture(
+                  LocalTime.of(13, 45), "L1", 10000, "Destination", 1, Duration.ofMinutes(5)),
+          "Train number cannot be greater than max");
+    }
+
+    @Test
+    @DisplayName("Constructor should throw NullPointerException from null destination")
+    public void testConstructorWithNullDestination() {
+      assertThrows(
+          NullPointerException.class,
+          () -> new TrainDeparture(LocalTime.of(13, 45), "L1", 123, null, 1, Duration.ofMinutes(5)),
+          "Destination cannot be null");
+    }
+
+    @Test
+    @DisplayName("Constructor should throw IllegalArgumentException from negative track")
+    public void testConstructorWithNegativeTrack() {
+      assertThrows(
+          IllegalArgumentException.class,
+          () ->
+              new TrainDeparture(
+                  LocalTime.of(13, 45), "L1", 123, "Destination", -1, Duration.ofMinutes(5)),
+          "Track cannot be negative");
+    }
   }
 
   /** This nested class contains positive tests for the TrainDeparture class. */
