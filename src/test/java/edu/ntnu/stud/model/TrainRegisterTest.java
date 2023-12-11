@@ -97,6 +97,52 @@ public class TrainRegisterTest {
   @DisplayName("Positive tests")
   public class MethodDoesNotThrowException {
     @Test
+    @DisplayName("Test clock setter")
+    public void testSetClock() {
+      LocalTime newTime = LocalTime.of(12, 0);
+      trainRegister.setClock(newTime);
+      assertEquals(newTime, trainRegister.getClock());
+    }
+
+    @Test
+    @DisplayName("Test getNumTrains()")
+    public void testGetNumTrains() {
+      assertEquals(trainRegister.getTrainDepartures().size(), trainRegister.getNumTrains());
+    }
+
+    @Test
+    @DisplayName("deleteTrainDepartures() works as expected")
+    public void testDeleteTrainDepartures() {
+      ArrayList<TrainDeparture> trainDepartures = trainRegister.getTrainDepartures();
+      int prevSize = trainDepartures.size();
+
+      trainRegister.deleteTrainDepartures(trainDepartures);
+
+      assertTrue(trainRegister.getTrainDepartures().isEmpty());
+      assertTrue(prevSize > trainRegister.getTrainDepartures().size());
+    }
+
+    @Test
+    @DisplayName("Changing track number of train departure works as expected")
+    public void testChangeTrackNumber() {
+      int newTrackNumber = 2;
+      trainRegister.changeTracks(trainDeparture.toArrayList(), newTrackNumber);
+      assertEquals(newTrackNumber, trainDeparture.getTrack());
+    }
+
+    @Test
+    @DisplayName("Adding delay to a list of train departures works as expected")
+    public void testAddDelay() {
+      int delayToAddMinutes = 10;
+      int shouldResultInMinutes = (int) trainDeparture.getDelay().toMinutes() + delayToAddMinutes;
+
+      trainRegister.addDelay(trainDeparture.toArrayList(), delayToAddMinutes);
+
+      assertEquals((int) trainDeparture.getDelay().toMinutes(), shouldResultInMinutes);
+    }
+    
+
+    @Test
     @DisplayName("Adding valid train departure does not throw exception")
     public void testAddTrainDeparture() {
       TrainDeparture newTrainDeparture =
@@ -165,8 +211,7 @@ public class TrainRegisterTest {
     @Test
     @DisplayName("Returns a list of all departures without a track number")
     public void testGetDeparturesWithoutTrack() {
-      ArrayList<TrainDeparture> departuresWithoutTrack =
-          trainRegister.getDeparturesWithoutTrack();
+      ArrayList<TrainDeparture> departuresWithoutTrack = trainRegister.getDeparturesWithoutTrack();
       assertTrue(departuresWithoutTrack.contains(noTrackTrainDeparture));
       assertTrue(departuresWithoutTrack.size() == 1);
       assertFalse(departuresWithoutTrack.contains(trainDeparture));
