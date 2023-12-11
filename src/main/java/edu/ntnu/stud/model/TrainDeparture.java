@@ -65,7 +65,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
    */
   public void setDepartureTime(LocalTime departureTime) {
     if (departureTime == null) {
-      throw new IllegalArgumentException("Departure time cannot be null");
+      throw new NullPointerException("Departure time cannot be null");
     }
     this.departureTime = departureTime;
   }
@@ -82,7 +82,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
    */
   public void setLine(String line) {
     if (line == null) {
-      throw new IllegalArgumentException("Line cannot be null");
+      throw new NullPointerException("Line cannot be null");
     }
     this.line = line;
   }
@@ -120,7 +120,7 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
    */
   public void setDestination(String destination) {
     if (destination == null) {
-      throw new IllegalArgumentException("Destination cannot be null");
+      throw new NullPointerException("Destination cannot be null");
     }
     this.destination = destination;
   }
@@ -153,6 +153,9 @@ public class TrainDeparture implements Comparable<TrainDeparture> {
    * @throws IllegalArgumentException if the delay is negative
    */
   public void setDelay(Duration delay) {
+    if (delay == null) {
+      throw new NullPointerException("Delay cannot be null");
+    }
     if (delay.isNegative()) {
       throw new IllegalArgumentException("Delay cannot be negative");
     }
