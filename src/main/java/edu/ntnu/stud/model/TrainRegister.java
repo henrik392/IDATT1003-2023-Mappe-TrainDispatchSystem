@@ -2,6 +2,7 @@ package edu.ntnu.stud.model;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.stream.Collectors;
 
@@ -139,18 +140,14 @@ public class TrainRegister {
   }
 
   /**
-   * Sorts the train departures in the train register by departure time with delay. The original
-   * order of train departures does not matter. Therefore, the method does not return a sorted copy,
-   * but the train departures itself.
+   * Sorts the train departures in the train register by departure time with delay. Uses compareTo
+   * method in TrainDeparture. The original order of train departures does not matter. Therefore,
+   * the method does not return a sorted copy, but the train departures itself.
    *
    * @return A sorted ArrayList of TrainDeparture objects.
    */
   public ArrayList<TrainDeparture> sortByDelayedTime() {
-    trainDepartures.sort(
-        (trainDeparture1, trainDeparture2) ->
-            trainDeparture1
-                .getDepartureTimeWithDelay()
-                .compareTo(trainDeparture2.getDepartureTimeWithDelay()));
+    Collections.sort(trainDepartures);
 
     return trainDepartures;
   }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * The TrainDeparture class represents a train departure with its departure time, line, train
  * number, destination, track, and delay.
  */
-public class TrainDeparture {
+public class TrainDeparture implements Comparable<TrainDeparture> {
   private LocalTime departureTime;
   private String line;
   private int trainNumber;
@@ -177,6 +177,11 @@ public class TrainDeparture {
     ArrayList<TrainDeparture> list = new ArrayList<>();
     list.add(this);
     return list;
+  }
+
+  @Override
+  public int compareTo(TrainDeparture other) {
+    return this.getDepartureTimeWithDelay().compareTo(other.getDepartureTimeWithDelay());
   }
 
   /**
