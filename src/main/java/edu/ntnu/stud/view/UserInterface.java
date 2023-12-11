@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *
  * The UserInterface class represents the user interface of the Train Dispatch System. It provides
  * methods for handling and displaying menus, and interacting with the TrainRegister. It can update
- * time and depart trains. search, add, delete, change track, and add delay to train departures
+ * time and depart trains. search, add, delete, change/add track, and add delay to train departures
  */
 public class UserInterface {
   // Default options.
@@ -63,7 +63,7 @@ public class UserInterface {
     // Add options to main menu
     this.mainMenu.addOption(DISPLAY_DEPARTURES_OPTION, "Display train departures");
     this.mainMenu.addOption(UPDATE_CLOCK_OPTION, "Update clock");
-    this.mainMenu.addOption(SEARCH_MENU_OPTION, "Search (delete, change track, add delay)");
+    this.mainMenu.addOption(SEARCH_MENU_OPTION, "Search (delete, change/add track, add delay)");
     this.mainMenu.addOption(ADD_DEPARTURE_OPTION, "Add train departure");
     this.mainMenu.addOption(EXIT_OPTION, "Exit application");
 
@@ -75,7 +75,7 @@ public class UserInterface {
     // Add options to process trains menu
     this.processTrainsMenu.addOption(DISPLAY_FOUND_TRAINS_OPTION, "Display found trains");
     this.processTrainsMenu.addOption(DELETE_TRAIN_OPTION, "Delete train");
-    this.processTrainsMenu.addOption(CHANGE_TRACK_OPTION, "Change track");
+    this.processTrainsMenu.addOption(CHANGE_TRACK_OPTION, "change/add track");
     this.processTrainsMenu.addOption(ADD_DELAY_OPTION, "Add delay");
     this.processTrainsMenu.addOption(EXIT_OPTION, "Back to search menu");
   }
