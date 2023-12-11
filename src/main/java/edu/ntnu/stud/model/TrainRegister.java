@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
  *
  * <h2>TrainRegister</h2>
  *
- * TrainRegister represents a register of train departures. It provides methods to add, delete, and
- * modify train departures, as well as retrieve information about the train departures.
+ * <p>TrainRegister represents a register of train departures. It provides methods to add, delete,
+ * and modify train departures, as well as retrieve information about the train departures.
  */
 public class TrainRegister {
   private final ArrayList<TrainDeparture> trainDepartures;
@@ -23,6 +23,11 @@ public class TrainRegister {
     clock = LocalTime.of(0, 0);
   }
 
+  /**
+   * Returns the list of train departures. Used mainly by the test class.
+   *
+   * @return the list of train departures
+   */
   public ArrayList<TrainDeparture> getTrainDepartures() {
     return trainDepartures;
   }
