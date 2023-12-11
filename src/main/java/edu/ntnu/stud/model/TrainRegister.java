@@ -144,6 +144,28 @@ public class TrainRegister {
   }
 
   /**
+   * Returns an ArrayList of TrainDeparture objects that have a track assigned.
+   *
+   * @return ArrayList of TrainDeparture objects with assigned tracks.
+   */
+  public ArrayList<TrainDeparture> getDeparturesWithTrack() {
+    return trainDepartures.stream()
+        .filter(trainDeparture -> trainDeparture.getTrack() != 0)
+        .collect(Collectors.toCollection(ArrayList::new));
+  }
+
+  /**
+   * Returns an ArrayList of TrainDeparture objects that do not have a track assigned.
+   *
+   * @return ArrayList of TrainDeparture objects without a track
+   */
+  public ArrayList<TrainDeparture> getDeparturesWithoutTrack() {
+    return trainDepartures.stream()
+        .filter(trainDeparture -> trainDeparture.getTrack() == 0)
+        .collect(Collectors.toCollection(ArrayList::new));
+  }
+
+  /**
    * Sorts the train departures in the train register by departure time with delay. Uses compareTo
    * method in TrainDeparture. The original order of train departures does not matter. Therefore,
    * the method does not return a sorted copy, but the train departures itself.
