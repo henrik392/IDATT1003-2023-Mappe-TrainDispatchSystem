@@ -204,6 +204,15 @@ public class UserInterface {
   private void handleUpdateClock() {
     System.out.println("Current time: " + trainRegister.getClock());
     LocalTime newTime = UserInput.readTime();
+
+    if (newTime.equals(trainRegister.getClock())) {
+      System.out.println("Time not updated\n");
+      return;
+    } else if (newTime.isBefore(trainRegister.getClock())) {
+      System.out.println("Time cannot be set to a time before the current time\n");
+      return;
+    }
+
     trainRegister.setClock(newTime);
     ArrayList<TrainDeparture> departedTrains = trainRegister.departTrains();
 
