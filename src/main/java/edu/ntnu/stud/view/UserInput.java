@@ -7,6 +7,7 @@ import java.util.Scanner;
 /** The UserInput class provides utility methods for reading user input. */
 public class UserInput {
   private static final Scanner scanner = new Scanner(System.in);
+  private static final int MAX_TRAIN_NUMBER = 9999;
 
   private UserInput() {
     throw new IllegalStateException("Utility class");
@@ -116,7 +117,7 @@ public class UserInput {
       System.out.println("Enter train number:");
       int trainNumber = readInt();
 
-      if (trainNumber > 0) {
+      if (trainNumber > 0 && trainNumber <= MAX_TRAIN_NUMBER) {
         return trainNumber;
       }
 
