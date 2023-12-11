@@ -104,6 +104,10 @@ public class UserInterface {
     trainRegister.addTrainDeparture(
         new TrainDeparture(LocalTime.of(20, 00), "L8", 400, "Oslo", 8, Duration.ofMinutes(5)));
 
+    // Train departure without track number
+    trainRegister.addTrainDeparture(
+        new TrainDeparture(LocalTime.of(14, 0), "L9", 450, "Ålesund", 0, Duration.ofMinutes(0)));
+
     // Sort by time
     trainRegister.sortByDelayedTime();
 
@@ -197,7 +201,18 @@ public class UserInterface {
       return;
     }
 
-    displayTable(trainRegister.sortByDelayedTime());
+    ArrayList<TrainDeparture> trainDeparturesWithTrack = trainRegister.getDeparturesWithTrack();
+    ArrayList<TrainDeparture> trainDeparturesWithoutTrack =
+        trainRegister.getDeparturesWithoutTrack();
+
+    if (!trainDeparturesWithTrack.isEmpty()) {
+      System.out.println("Trains with track:");
+      displayTable(trainDeparturesWithTrack);
+    }
+    if (!trainDeparturesWithoutTrack.isEmpty()) {
+      System.out.println("Trains without track:");
+      displayTable(trainDeparturesWithoutTrack);
+    }
   }
 
   /**
@@ -245,6 +260,8 @@ public class UserInterface {
 
     trainRegister.addTrainDeparture(
         new TrainDeparture(departureTime, line, trainNumber, destination, track, delay));
+
+    trainRegister.sortByDelayedTime();
   }
 
   /**
@@ -354,6 +371,17 @@ public class UserInterface {
   }
 
   /**
+   * Formats the track number as a string. If the track number is 0, it returns "No track".
+   * Otherwise, it returns the track number as a string.
+   *
+   * @param trackNumber the track number to be formatted
+   * @return the formatted track number as a string
+   */
+  private String formatTrackNumber(int trackNumber) {
+    return trackNumber == 0 ? "No track" : Integer.toString(trackNumber);
+  }
+
+  /**
    * Displays a table of train departures.
    *
    * @param trainDepartures the list of train departures to display
@@ -371,7 +399,7 @@ public class UserInterface {
             trainDeparture.getLine(),
             Integer.toString(trainDeparture.getTrainNumber()),
             trainDeparture.getDestination(),
-            Integer.toString(trainDeparture.getTrack()),
+            formatTrackNumber(trainDeparture.getTrack()),
             (trainDeparture.getDelay().isZero()
                 ? ""
                 : trainDeparture.getDelay().toMinutes() + " min")
