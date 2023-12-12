@@ -4,21 +4,27 @@ This file uses Mark Down syntax. For more information see [here](https://www.mar
 STUDENT NAME = Henrik Halvorsen Kvamme
 STUDENT ID = 111794
 
-Agregering, komposisjon
-
 ## Project description
+The TrainDispatchSystem is a project that manages information about train departures. The system allows users to view departure times, line information, destinations, and any delays for trains.
 
-[//]: # (TODO: Write a short description of your project/product here.)
-Prosjektet bruker Semantisk Versjonering (SemVer). Den deler versjonen i tre deler i "MAJOR.MINOR.PATCH":
-1. MAJOR versjon økes når det er gjort inkompatible API-endringer
-2. MINOR versjon økes når du legger til funksjonalitet på en bakoverkompatibel måte
-3. PATCH versjon økes når du gjør bakoverkompatible feilrettinger
+The project is structured with a modular approach, where each component of the system is divided into separate classes and packages to promote code reuse and maintenance.
 
-Før realease er versjonen i formatet 0.x.y for å symbolisere at den er i en tidlig ustabil fase.
+It uses Semantic Versioning (SemVer) to manage versions of the project. This means that each version is divided into "MAJOR.MINOR.PATCH", where:
+
+MAJOR version is increased when there have been incompatible API changes
+MINOR version is increased when functionality is added in a backwards-compatible manner
+PATCH version is increased when we make backwards-compatible bug fixes
+Before release, the version is in the format 0.x.y to signify that it is in an early unstable phase.
+
+To run the project, see the instructions in the section "How to run the project".
 
 ## Project structure
 
-[//]: # (TODO: Describe the structure of your project here. How have you used packages in your structure. Where are all sourcefiles stored. Where are all JUnit-test classes stored. etc.)
+Prosjektet følger en Model-View struktur, som er en forenklet versjon av Model-View-Controller (MVC) arkitekturen. Her er en kort beskrivelse av hvordan dette fungerer i vårt prosjekt:
+
+Model: Dette er dataene og forretningslogikken i applikasjonen. I prosjektet er dette representert av klassene TrainDeparture og TrainRegister.
+
+View: Dette er brukergrensesnittet som presenterer data til brukeren og samler inn brukerinput. Dette er klasser som UserInterface, UserInput, Menu og TableFormatter.
 
 ## Link to repository
 
@@ -26,24 +32,14 @@ Før realease er versjonen i formatet 0.x.y for å symbolisere at den er i en ti
 
 ## How to run the project
 
-[//]: # (TODO: Describe how to run your project here. What is the main class? What is the main method?
-What is the input and output of the program? What is the expected behaviour of the program?)
+Run this in terminal:
+```mvn compile```
+
+```cd target/classes```
+
+```java edu.ntnu.stud.Main```
 
 ## How to run the tests
 
-[//]: # (TODO: Describe how to run the tests here.)
-@DisplayName format:
+```mvn test```
 
-```java
-@DisplayName("[Action or Condition] [in/on/at] [Method/Class/Scenario] [Expected Result/Behavior]")
-
-// For example:
-@DisplayName("Valid input on addItem method adds item successfully")
-@DisplayName("Division by zero in calculate method throws ArithmeticException")
-@DisplayName("Incorrect credentials on login method returns authentication error")
-```
-
-## References
-
-[//]: # (TODO: Include references here, if any. For example, if you have used code from the course book, include a reference to the chapter.
-Or if you have used code from a website or other source, include a link to the source.)
